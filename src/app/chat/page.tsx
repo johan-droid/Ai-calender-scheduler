@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Bot, User, Sparkles, Clock, Calendar as CalendarIcon } from "lucide-react";
 
@@ -21,6 +21,15 @@ export default function ChatPage() {
     ]);
     const [input, setInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages, isTyping]);
 
     const handleSend = () => {
         if (!input.trim()) return;
@@ -46,7 +55,7 @@ export default function ChatPage() {
     };
 
     return (
-        <div className="flex flex-col h-[calc(100dvh-100px)] md:h-[calc(100dvh-6rem)] w-full max-w-4xl mx-auto md:glass-card rounded-2xl md:rounded-3xl overflow-hidden md:border border-white/10 md:shadow-2xl relative">
+        <div className="flex flex-col h-[calc(100dvh-100px)] md:h-[calc(100dvh-6rem)] w-full max-w-4xl mx-auto md:glass-card rounded-2xl md:rounded-3xl overflow-hidden md:border border-white/10 md:shadow-2xl relative bg-background/50 md:bg-transparent">
             {/* Background ambient light */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] md:w-[80%] h-[100%] md:h-[80%] bg-primary/5 blur-[100px] md:blur-[120px] pointer-events-none" />
 
@@ -63,9 +72,9 @@ export default function ChatPage() {
                 </div>
             </div>
 
-            {/* Chat Area */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-6 flex flex-col gap-4 md:gap-6 z-10 scrollbar-hide">
-                <AnimatePresence>
+            {/* Chat Area - ensuring flex-1 and overflow-y-auto work perfectly */}
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 flex flex-col gap-4 md:gap-6 z-10 scroll-smooth">
+                <AnimatePresence initial={false}>
                     {messages.map((msg) => (
                         <motion.div
                             key={msg.id}
@@ -140,6 +149,8 @@ export default function ChatPage() {
                         </div>
                     </motion.div>
                 )}
+                {/* Invisible element to auto-scroll to */}
+                <div ref={messagesEndRef} className="h-1 pb-4" />
             </div>
 
             {/* Input Area */}
