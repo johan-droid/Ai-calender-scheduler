@@ -37,33 +37,33 @@
 }
 
 :root {
-  /* HSL Values for a Premium Dark Theme (Deep Navy/Purple) */
-  --background: oklch(0.14 0.02 280);
+  /* HSL Values for a Premium Dark Theme (Neutral Slate/Zinc) */
+  --background: oklch(0.13 0.01 260); /* Deep gray-blue */
   --foreground: oklch(0.98 0 0);
 
-  --card: oklch(0.18 0.03 280);
+  --card: oklch(0.16 0.01 260);
   --card-foreground: oklch(0.98 0 0);
 
-  --primary: oklch(0.7 0.15 280);
-  --primary-foreground: oklch(0.1 0.02 280);
+  --primary: oklch(0.98 0 0); /* Crisp white for primary actions */
+  --primary-foreground: oklch(0.13 0.01 260);
 
-  --secondary: oklch(0.25 0.05 280);
+  --secondary: oklch(0.20 0.01 260); /* Lighter gray for secondary */
   --secondary-foreground: oklch(0.98 0 0);
 
-  --accent: oklch(0.65 0.2 320); 
+  --accent: oklch(0.20 0.01 260); 
   --accent-foreground: oklch(0.98 0 0);
 
   --destructive: oklch(0.6 0.2 20);
   --destructive-foreground: oklch(0.98 0 0);
 
-  --muted: oklch(0.2 0.02 280);
-  --muted-foreground: oklch(0.6 0.02 280);
+  --muted: oklch(0.18 0.01 260);
+  --muted-foreground: oklch(0.65 0 0);
 
-  --border: oklch(0.25 0.03 280);
-  --input: oklch(0.25 0.03 280);
-  --ring: oklch(0.7 0.15 280);
+  --border: oklch(0.22 0.01 260);
+  --input: oklch(0.22 0.01 260);
+  --ring: oklch(0.98 0 0); /* White focus rings */
 
-  --radius: 0.75rem;
+  --radius: 0.5rem; /* Sharper edges */
 }
 
 @layer base {
@@ -71,24 +71,22 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground antialiased selection:bg-primary/30;
-    /* Adding a subtle gradient noise/glow to the background */
-    background-image: radial-gradient(circle at top right, rgba(120, 80, 255, 0.08) 0%, transparent 40%),
-                      radial-gradient(circle at bottom left, rgba(0, 229, 255, 0.05) 0%, transparent 50%);
-    background-attachment: fixed;
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
+    /* Clean, solid background - removed the noisy glowing gradients */
   }
 }
 
-/* Custom Utilities for Glassmorphism */
+/* Custom Utilities for Professional UI */
 @utility glass {
-  @apply bg-background/50 backdrop-blur-md border border-white/5;
+  /* Removed heavy blur in favor of pure semi-transparent solid backgrounds */
+  @apply bg-card/80 border border-white/5;
 }
 
 @utility glass-card {
-  @apply bg-card/60 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)];
+  @apply bg-card border border-white/10 shadow-lg shadow-black/20;
 }
 
-/* Awesome gradient text */
+/* Replaced wild gradients with a subtle shine if absolutely needed */
 @utility text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+  @apply text-foreground;
 }
